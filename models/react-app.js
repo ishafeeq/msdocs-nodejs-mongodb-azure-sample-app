@@ -5,7 +5,7 @@ const reactAppSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
-  appRuntime: String,
+  figmaUrl: String,
   createDate: Date,
   status: String,
   completed: Boolean
