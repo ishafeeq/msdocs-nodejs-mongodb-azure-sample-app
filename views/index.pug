@@ -18,8 +18,16 @@ block content
         div(class='col-md-8')
           input(class="form-control form-control-sm" type="text" name='appName', placeholder="Enter App name here" )
         div(class='col-md-2 text-end')
-          button(class='btn btn-success btn-sm' type='submit') Add task
+          button(class='btn btn-success btn-sm' type='submit') Create App
 
+  form(action='./createReactApp' method='POST' class='form-registration')
+    div(class='row my-3')
+        div(class='col-md-2 align-bottom')
+          label(for="figmaUrl" class='fs-5') New App
+        div(class='col-md-8')
+          input(class="form-control form-control-sm" type="text" name='figmaUrl', placeholder="Enter Figma project URL" )
+        div(class='col-md-2 text-end')
+          button(class='btn btn-success btn-sm' type='submit') Create React App
 
   h5(class='my-2') Current tasks
 
@@ -51,3 +59,25 @@ block content
       div(class='col-sm-8') #{task.taskName}
       div(class='col-sm-2') #{format(task.createDate, "yyyy-MM-dd")}
       div(class='col-sm-2') #{format(task.completedDate, "yyyy-MM-dd")}
+  
+  h5(class='my-2') Created Apps
+  div(class='row mb-3 border-bottom border-3')
+    div(class='col-sm-8 fw-bold') App Name
+    div(class='col-sm-2 fw-bold') Created
+    div(class='col-sm-2 fw-bold') Completed
+  each apps in createdApps
+    div(class='row mb-3')
+      div(class='col-sm-8') #{apps.appName}
+      div(class='col-sm-2') #{format(apps.createDate, "yyyy-MM-dd")}
+      div(class='col-sm-2') #{format(apps.completedDate, "yyyy-MM-dd")}
+  
+  h5(class='my-2') Created Figma Apps
+  div(class='row mb-3 border-bottom border-3')
+    div(class='col-sm-8 fw-bold') Figma Project Name
+    div(class='col-sm-2 fw-bold') Created
+    div(class='col-sm-2 fw-bold') Completed
+  each reactApps in createdReactApps
+    div(class='row mb-3')
+      div(class='col-sm-8') #{reactApps.appName}
+      div(class='col-sm-2') #{format(reactApps.createDate, "yyyy-MM-dd")}
+      div(class='col-sm-2') #{format(reactApps.completedDate, "yyyy-MM-dd")}

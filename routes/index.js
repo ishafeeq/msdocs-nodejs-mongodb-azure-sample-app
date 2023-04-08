@@ -1,25 +1,34 @@
 var express = require('express');
 var Task = require('../models/task');
 var Application = require('../models/application');
+var ReactApplication = require('../models/react-app');
 
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   Task.find()
-    .then((tasks) => {      
-      const currentTasks = tasks.filter(task => !task.completed);
-      const completedTasks = tasks.filter(task => task.completed === true);
-
-      console.log(`Total tasks: ${tasks.length}   Current tasks: ${currentTasks.length}    Completed tasks:  ${completedTasks.length}`)
-      res.render('index', { currentTasks: currentTasks, completedTasks: completedTasks });
+    .then((tasks) => {  
+      Application.find()
+        .then((apps) => {
+          const currentTasks = tasks.filter(task => !task.completed);
+          const completedTasks = tasks.filter(task => task.completed === true);
+          const createdApps = apps;
+          const createdReactApps = apps;
+          console.log(`Total tasks: ${tasks.length}   Current tasks: ${currentTasks.length}    Completed tasks:  ${completedTasks.length}`)
+          res.render('index', { currentTasks: currentTasks, completedTasks: completedTasks,
+            createdApps: createdApps, createdReactApps: createdReactApps });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.send('Sorrrry! Something went wrong.');
+        });
     })
     .catch((err) => {
       console.log(err);
       res.send('Sorry! Something went wrong.');
     });
 });
-
 
 router.post('/addTask', function(req, res, next) {
   const taskName = req.body.taskName;
@@ -54,6 +63,25 @@ router.post('/createApp', function(req, res, next) {
   app.save()
       .then(() => { 
         console.log(`Created new App  ${appName} - createDate ${createDate}`)        
+        res.redirect('/'); })
+      .catch((err) => {
+          console.log(err);
+          res.send('Sorry! Something went wrong.');
+      });
+});
+
+router.post('/createReactApp', function(req, res, next) {
+  const figmaUrl = req.body.figmaUrl;
+  const createDate = Date.now();
+  
+  var reactApplication = new ReactApplication({
+    figmaUrl: figmaUrl,
+    createDate: createDate
+  });
+  console.log(`Adding a new React App ${figmaUrl} - createDate ${createDate}`)
+  reactApplication.save()
+      .then(() => { 
+        console.log(`Added new React App ${figmaUrl} - createDate ${createDate}`)        
         res.redirect('/'); })
       .catch((err) => {
           console.log(err);
