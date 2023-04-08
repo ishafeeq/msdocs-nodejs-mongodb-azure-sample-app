@@ -1,5 +1,6 @@
 var express = require('express');
 var Task = require('../models/task');
+var Application = require('../models/application');
 
 var router = express.Router();
 
@@ -33,6 +34,26 @@ router.post('/addTask', function(req, res, next) {
   task.save()
       .then(() => { 
         console.log(`Added new task ${taskName} - createDate ${createDate}`)        
+        res.redirect('/'); })
+      .catch((err) => {
+          console.log(err);
+          res.send('Sorry! Something went wrong.');
+      });
+});
+
+router.post('/createApp', function(req, res, next) {
+  const appName = req.body.appName;
+  const createDate = Date.now();
+  
+  var app = new Application({
+    appName: appName,
+    createDate: createDate
+  });
+  console.log(`Creating new App ${appName} - createDate ${createDate}`)
+
+  app.save()
+      .then(() => { 
+        console.log(`Created new App  ${appName} - createDate ${createDate}`)        
         res.redirect('/'); })
       .catch((err) => {
           console.log(err);
