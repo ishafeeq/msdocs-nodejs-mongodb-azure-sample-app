@@ -53,11 +53,13 @@ router.post('/addTask', function(req, res, next) {
 router.post('/createApp', function(req, res, next) {
   const appName = req.body.appName;
   const createDate = Date.now();
+  const completedDate = Date.now();
   
   var app = new Application({
     appName: appName,
     completed: true,
-    createDate: createDate
+    createDate: createDate,
+    completedDate: completedDate
   });
   console.log(`Creating new App ${appName} - createDate ${createDate}`)
 
@@ -74,11 +76,13 @@ router.post('/createApp', function(req, res, next) {
 router.post('/createReactApp', function(req, res, next) {
   const figmaUrl = req.body.figmaUrl;
   const createDate = Date.now();
-  
+  const completedDate = Date.now();
+
   var reactApplication = new ReactApplication({
     figmaUrl: figmaUrl,
     completed: true,
-    createDate: createDate
+    createDate: createDate,
+    completedDate: completedDate
   });
   console.log(`Adding a new React App ${figmaUrl} - createDate ${createDate}`)
   reactApplication.save()
