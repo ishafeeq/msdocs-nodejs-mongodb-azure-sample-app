@@ -1,0 +1,4 @@
+client-id=654873f6-df4e-4538-8b69-f5a79c0f8e5a
+tenant-id=86980210-69b9-4010-bf1a-86000253e27a
+sess-value=P4c8Q~CadjmhWUI2d9wZ4_Bh.kcfXjBJXWkH3aIb
+sess-id=20aa1ba5-2ae7-4559-aaf8-357c8403f027

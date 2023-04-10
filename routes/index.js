@@ -1,9 +1,15 @@
+const fetch = require('node-fetch');
+
 var express = require('express');
 var Task = require('../models/task');
 var Application = require('../models/application');
 var ReactApplication = require('../models/react-app');
 
+
 var router = express.Router();
+
+// Replace <ACCESS_TOKEN> with your Figma personal access token
+const accessToken = "figd_aPY5cx3QNsTceswfei0G-CmnkntR62ZQTyF3rFq_";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -74,10 +80,41 @@ router.post('/createApp', function(req, res, next) {
 });
 
 router.post('/createReactApp', function(req, res, next) {
+  // https://www.figma.com/file/F6HNPn0A2H09MXjtLm9ocK/MyFigmaTry?node-id=0-1&t=Be1I1yKB0iN4FhBg-0
   const figmaUrl = req.body.figmaUrl;
+  const fileKey = figmaUrl.split("/")[4];
   const createDate = Date.now();
   const completedDate = Date.now();
 
+  // Fetch the Figma file metadata
+  fetch(`https://api.figma.com/v1/files/${fileKey}`, {
+    headers: {
+        "X-Figma-Token": accessToken
+    }
+  })
+  .then(res => res.json())
+  .then(data => {
+    // Get the page IDs for the project
+    const pageIds = data.document.children.map(child => child.id);
+
+    // Fetch each page's resources
+    Promise.all(pageIds.map(pageId => {
+        return fetch(`https://api.figma.com/v1/files/${fileKey}/nodes?ids=${pageId}&depth=1`, {
+            headers: {
+                "X-Figma-Token": accessToken
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            // Get the resources for this page
+            const resources = data.nodes[pageId].document.children;
+
+            // Log the resources
+            console.log(`Resources for page ${pageId}:`);
+            console.log(resources);
+        });
+    }));
+  });
   var reactApplication = new ReactApplication({
     figmaUrl: figmaUrl,
     completed: true,

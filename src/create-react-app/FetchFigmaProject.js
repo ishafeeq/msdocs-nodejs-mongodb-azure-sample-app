@@ -1,10 +1,10 @@
 const fetch = require('node-fetch');
 
 // Replace <FILE_KEY> with your Figma project file key
-const fileKey = "<FILE_KEY>";
+const fileKey = "F6HNPn0A2H09MXjtLm9ocK";
 
 // Replace <ACCESS_TOKEN> with your Figma personal access token
-const accessToken = "<ACCESS_TOKEN>";
+const accessToken = "figd_aPY5cx3QNsTceswfei0G-CmnkntR62ZQTyF3rFq_";
 
 // Replace <PROJECT_URL> with your Figma project URL
 const projectUrl = "<PROJECT_URL>";
