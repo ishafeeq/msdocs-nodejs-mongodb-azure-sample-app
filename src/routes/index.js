@@ -111,7 +111,37 @@ router.post('/createReactApp', function(req, res, next) {
 
             // Log the resources
             console.log(`Resources for page ${pageId}:`);
-            console.log(resources);
+            // console.log(resources);
+            resources.forEach(resource => {
+              console.log(`resourceName: ${resource.name}`);
+              
+              console.log("====================");
+              console.log(`BackGround length: ${resource.background.length}`);
+              const backGrnd = resource.background[0];
+              const backGrndKeys = Object.keys(backGrnd);
+              for (const key of backGrndKeys) {
+                console.log(`BackGround-Key: ${key}, Value: ${backGrnd[key]}`);
+              }
+              console.log("");
+
+              console.log("====================");
+              console.log(`fills length: ${resource.fills.length}`);
+              const fills = resource.fills[0];
+              const fillsKeys = Object.keys(fills);
+              for (const key of fillsKeys) {
+                console.log(`fills-Key: ${key}, Value: ${fills[key]}`);
+              }
+              console.log("");
+
+              console.log("====================");
+              console.log(`layoutGrids length: ${resource.layoutGrids.length}`);
+              const layoutGrid = resource.layoutGrids[0];
+              const layoutGridKeys = Object.keys(layoutGrid);
+              for (const key of layoutGridKeys) {
+                console.log(`fills-Key: ${key}, Value: ${layoutGrid[key]}`);
+              }
+              console.log("");
+            });
         });
     }));
   });
